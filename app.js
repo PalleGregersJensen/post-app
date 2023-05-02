@@ -1,7 +1,7 @@
 "use strict";
 
 // const endpoint = "https://post-rest-api-default-rtdb.firebaseio.com";
-const endpoint = "";
+const endpoint = "https://api-project-pgj-2023-default-rtdb.firebaseio.com/";
 let posts;
 
 window.addEventListener("load", initApp);
