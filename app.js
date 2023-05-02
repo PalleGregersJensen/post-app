@@ -112,11 +112,12 @@ function showPost(postObject) {
     document.querySelector("#posts").insertAdjacentHTML("beforeend", html); // append html to the DOM - section#posts
 
     // add event listeners to .btn-delete and .btn-update
-    document.querySelector("#posts article:last-child .btn-delete").addEventListener("click", deleteClicked);
-    document.querySelector("#posts article:last-child .btn-update").addEventListener("click", updateClicked);
+    document.querySelector("#posts article:last-child .btn-delete").addEventListener("click", ()=> deleteClicked(postObject));
+    document.querySelector("#posts article:last-child .btn-update").addEventListener("click", ()=> updateClicked(postObject));
+}
 
-    // called when delete button is clicked
-    function deleteClicked() {
+// called when delete button is clicked
+    function deleteClicked(postObject) {
         // show title of post you want to delete
         document.querySelector("#dialog-delete-post-title").textContent = postObject.title;
         // set data-id attribute of post you want to delete (... to use when delete)
@@ -125,8 +126,11 @@ function showPost(postObject) {
         document.querySelector("#dialog-delete-post").showModal();
     }
 
+
+
+
     // called when update button is clicked
-    function updateClicked() {
+    function updateClicked(postObject) {
         const updateForm = document.querySelector("#form-update-post"); // reference to update form in dialog
         updateForm.title.value = postObject.title; // set title input in update form from post title
         updateForm.body.value = postObject.body; // set body input in update form post body
@@ -134,20 +138,29 @@ function showPost(postObject) {
         updateForm.setAttribute("data-id", postObject.id); // set data-id attribute of post you want to update (... to use when update)
         document.querySelector("#dialog-update-post").showModal(); // show update modal
     }
-}
 
+
+// ---- searchPosts() med arrow-function-----
 function searchPosts(searchValue) {
     searchValue = searchValue.toLowerCase();
-
-    const results = posts.filter(checkTitle);
-
-    function checkTitle(post) {
-        const title = post.title.toLowerCase();
-        return title.includes(searchValue);
-    }
-
+    const results = posts.filter(post => post.title.toLowerCase().includes(searchValue))
     return results;
 }
+
+
+// ------Funktion med function declaration------
+// function searchPosts(searchValue) {
+    // searchValue = searchValue.toLowerCase();
+
+    // const results = posts.filter(checkTitle);
+
+    // function checkTitle(post) {
+        // const title = post.title.toLowerCase();
+        // return title.includes(searchValue);
+    // }
+
+    // return results;
+// }
 
 // Create a new post - HTTP Method: POST
 async function createPost(title, body, image) {
